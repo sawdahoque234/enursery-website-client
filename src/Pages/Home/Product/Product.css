@@ -1,0 +1,50 @@
+.product {
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  margin-left: 70px;
+  margin-bottom: 20px;
+}
+.product-name {
+  color: blue;
+  font-weight: 400;
+}
+.btn-regular {
+  background-color: goldenrod;
+  width: 150px;
+  height: 25px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.icon-color {
+  color: gold;
+}
+#link1 {
+  text-decoration: none;
+}
+#button1 {
+  background-color: blueviolet;
+  color: white;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5%;
+  border: 2px solid blueviolet;
+  margin-bottom: 10px;
+}
+#stocknmb {
+  color: rgba(255, 0, 0, 0.746);
+  font-weight: 600;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+#stock {
+  color: rgb(156, 11, 192);
+}
+#img1 {
+  border-radius: 5%;
+}
+#ab {
+  margin-left: 100px;
+}

@@ -1,0 +1,39 @@
+[
+    {
+        "id": 1,
+        "name": "James Charles",
+        "email":"james@mail.com",
+        "description": "The service and support is very good. The website is user friendly. The content that is displayed is very genuine and accurate. The information that is provided in this website is described in depth. We can buy and sell plants using this website",
+        "rating":"",
+        "img": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": 2,
+        "name": "Atta Halinton",
+        "email":"atta213@hotmail.com",
+        "description": "All kind of nursery product is available in this website. The seller and buyer can interact using this website about the product. It is the biggest website to sell and buy products.",
+        "rating":"",
+        "img": "https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHdvbWFufGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+        
+    },
+    {
+        "id": 3,
+        "name": "Jacky Pandey",
+        "email":"pandey@gmail.com",
+        "description": "eNursery is such a website where anyone can buy and sell nursery products. It is the larges online marketplace for buy and sell allkind of nursery products. ",
+        "rating":"",
+        "img": "https://media.istockphoto.com/photos/young-businesswoman-in-a-modern-office-picture-id1291622774?b=1&k=20&m=1291622774&s=170667a&w=0&h=h9-SLbC5ZWfsqsOuCtBzbRNbnk97L1DzcxAV_oo9u24="
+       
+    },
+    {
+        "id": 4,
+        "name": "Mrs Lilly",
+        "email":"lilly213@gmail.com",
+        "description": "Its a very good site for buying and selling products. this sites  help us to make a nice garden. All kinds of nursery products we can get here and also this website ensure  the best products. I love this site most and buy many things. ",
+        "rating":"",
+        "img": "https://media.istockphoto.com/photos/young-woman-caring-for-flowers-in-the-greenhousehobby-work-and-picture-id949495362?k=20&m=949495362&s=612x612&w=0&h=Qp_N1nQVfmqpCtvunLYRgmt9fGlDHnuvj3xwYAAwU4I="
+       
+    }
+    
+    
+]
