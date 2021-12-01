@@ -14,7 +14,7 @@ const Products = () => {
     const size = 8;
    
     useEffect(() => {
-      fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
+      fetch(`https://protected-taiga-38505.herokuapp.com/products?page=${page}&&size=${size}`)
           .then(res => res.json())
           .then(data => {
               setProducts(data.products);

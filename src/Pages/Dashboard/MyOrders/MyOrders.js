@@ -7,13 +7,13 @@ const MyOrders = () => {
     const { user} = useAuth();
     
     useEffect(() => {
-        fetch(`http://localhost:5000/orders/${user.email}`)
+        fetch(`https://protected-taiga-38505.herokuapp.com/orders/${user.email}`)
         .then(res=>res.json())
         .then(data=>setOrders(data))
     }, [user.email])
   
     const handledelete = order => {
-        const url = `http://localhost:5000/orders/${order}`;
+        const url = `https://protected-taiga-38505.herokuapp.com/orders/${order}`;
         fetch(url, {
             method:"DELETE"
         })

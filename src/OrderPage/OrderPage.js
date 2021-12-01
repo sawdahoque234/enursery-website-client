@@ -17,7 +17,7 @@ const OrderPage = () => {
   
   
     useEffect(() => {
-        fetch(`http://localhost:5000/products/${productId}`)
+        fetch(`https://protected-taiga-38505.herokuapp.com/products/${productId}`)
             .then(res => res.json())
             .then(data => setProduct(data))
     },[productId])
@@ -27,7 +27,7 @@ const OrderPage = () => {
         const ordered = { ...product }
         data.order = ordered;
         data.status = "pending";
-    fetch('http://localhost:5000/addorders', {
+    fetch('https://protected-taiga-38505.herokuapp.com/addorders', {
         method: 'POST',
         headers: {
             'content-type':'application/json'

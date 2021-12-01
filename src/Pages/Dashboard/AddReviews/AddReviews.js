@@ -27,7 +27,7 @@ const AddReviews = () => {
         formData.append('description', description);
         formData.append('image', image);
 
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://protected-taiga-38505.herokuapp.com/reviews', {
             method: 'POST',
             body: formData
         })
@@ -60,14 +60,14 @@ const AddReviews = () => {
                     sx={{ width: '80%',marginBottom:'10px' }}
                     label="Name"
                                 required
-                                defaultValue={user.displayName}
+                                // defaultValue={user.displayName}
                     onChange={e => setName(e.target.value)}
                     variant="outlined" />
                 <TextField
                     sx={{ width: '80%',marginBottom:'10px' }}
                     label="Email"
                                 type="email"
-                                defaultValue={user.email}
+                                // defaultValue={user.email}
                                 
                     required
                     onChange={e => setEmail(e.target.value)}

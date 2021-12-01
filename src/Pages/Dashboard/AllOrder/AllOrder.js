@@ -14,14 +14,14 @@ const AllOrder = () => {
         console.log(id);
       };
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://protected-taiga-38505.herokuapp.com/orders')
         .then(res=>res.json())
         .then(data=>setOrders(data))
     }, [orderId])
     
 
     const handledelete = order => {
-        const url = `http://localhost:5000/orders/${order}`;
+        const url = `https://protected-taiga-38505.herokuapp.com/orders/${order}`;
         fetch(url, {
             method:"DELETE"
         })
@@ -39,7 +39,7 @@ const AllOrder = () => {
     }
     const onSubmit = (data) => {
         console.log(data, orderId);
-        fetch(`http://localhost:5000//${orderId}`, {
+        fetch(`https://protected-taiga-38505.herokuapp.com/${orderId}`, {
           method: "PUT",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(data),

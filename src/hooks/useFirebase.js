@@ -66,7 +66,7 @@ const useFirebase = () => {
             }).finally(() => setIsLoading(false));
     }
     const hanldeUserInfo = (email,displayName) => {
-        fetch("http://localhost:5000/users", {
+        fetch("https://protected-taiga-38505.herokuapp.com/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({email,displayName}),
