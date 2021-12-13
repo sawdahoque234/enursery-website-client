@@ -52,7 +52,7 @@ function Dashboard(props) {
             }
           });
       }, [user?.email]);
-      console.log(isAdmin);
+    
     const drawer = (
         <div>
             <Toolbar />

@@ -10,7 +10,7 @@ const Product = ({ product }) => {
       <div className="product">
             <div>
             <img
-              style={{ borderRadius: '10%',height:'250px',width:'250px', display: 'block', margin: 'auto' }} 
+              style={{ borderRadius: '10%',height:'200px',width:'200px', display: 'block', margin: 'auto' }} 
             src={`data:image/*;base64,${image}`} alt="" />
             </div>
             <div id="ab">

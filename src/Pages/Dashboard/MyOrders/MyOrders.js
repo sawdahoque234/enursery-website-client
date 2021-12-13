@@ -1,17 +1,31 @@
 import useAuth from "../../../hooks/useAuth";
-import { Typography,Container, Grid,Box,Button } from '@mui/material';
+import { Typography,Container, Grid,Box,Button, TableCell, TableContainer, Table, TableHead, TableRow, TableBody, Paper } from '@mui/material';
+import { useParams } from 'react-router';
+
 import React,{useEffect,useState} from 'react';
+import { Link } from "react-router-dom";
 
 const MyOrders = () => {
+    const { id } = useParams();
+    // const [products, setProducts] = useState([]);
+    // const {_id,productName,image,sellerName,city,stock,price} = product;
+    
+
     const [orders, setOrders] = useState([]);
     const { user} = useAuth();
     
     useEffect(() => {
         fetch(`https://protected-taiga-38505.herokuapp.com/orders/${user.email}`)
         .then(res=>res.json())
-        .then(data=>setOrders(data))
+            .then(data => {
+                setOrders(data)
+            console.log(orders)
+
+            
+            })
+        
     }, [user.email])
-  
+   
     const handledelete = order => {
         const url = `https://protected-taiga-38505.herokuapp.com/orders/${order}`;
         fetch(url, {
@@ -28,47 +42,100 @@ const MyOrders = () => {
         }
     })
 
+    }
+   
+let total = 0;
+for (const order of orders) {
+if (!order.quantity) {
+order.quantity = 1;
 }
+total =  order.order.price * order.quantity;
+    }
+    //payment
+    // useEffect(() => {
+    //     fetch('https://protected-taiga-38505.herokuapp.com/products')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             const matchedProducts = data.find(products => products._id === id)
+    //             setProducts(matchedProducts);
+    //         })
+    // }, [id])
+    const purchase =()=>{
+        const info = {
+            productName: orders?.name,
+            image: orders?.image,
+            total_amount: orders?.price,
+            cus_name: user?.displayName,
+            cus_email:user?.email
+            
+        }
+        fetch(`http://localhost:5000/init`,{
+            method: 'POST',
+            headers:{
+                "content-type" :"application/json"
+            },
+            body: JSON.stringify(info)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            window.location.replace(data)
+        })
+        
+    }
     return (
         <Container>
-        <Typography variant="h4" sx={{ fontWeight: '800', color: '#9907ed', paddingBottom: '50px' }} component="div">
-            My Order
-</Typography>
-        {
-            orders.map(order =>
-                <Box sx={{ flexGrow: 1 }} key={order._id}
-            >
-                    <Grid container  spacing={{ xs: 2, md: 3 }} style={{marginBottom:'30px'}} columns={{ xs: 4, sm: 8, md: 12 }} >
-                        <Grid  xs={2} sm={4} md={3} style={{marginBottom:'20px'}} >
-                        <img
-              style={{ borderRadius: '10%',height:'150px',width:'80%', display: 'block', margin: 'auto' }} 
-              src={`data:image/*;base64,${order.order.image}`}  alt="" />
-                        </Grid>
-                        <Grid xs={2} sm={4} md={3} >
-                            <Typography variant="h5" sx={{textAlign:'left',fontWeight: '600', color: 'green', paddingBottom: '7px', marginTop: '10px' }} component="div">
-                            {order.order.productName}
-                            </Typography>
-                            <Typography variant="body1" style={{color:'black',textAlign:'left'}}>Ordered By :{order.name} </Typography>
-                            <Typography variant="h6" sx={{ textAlign:'left',fontWeight: '500', color: 'tomato' }} component="div">
-                            Sell By: {order.order.sellerName},{order.order.city}
-                            </Typography>
+            <h2>My Orders: {orders.length}</h2>
+            <TableContainer component={Paper}>
+                <Table sx={{}} aria-label="Appointments table">
+                    <TableHead>
+                        <TableRow >
+                            <TableCell style={{color:"blue"}}>Product-Name</TableCell>
+                            <TableCell style={{color:"blue"}}>Seller</TableCell>
+                            <TableCell style={{color:"blue"}}>Seller-City</TableCell>
+                            <TableCell style={{color:"blue"}}>Per-Price</TableCell>
+                            <TableCell style={{ color: "blue" }}>Quantity</TableCell>
+                            <TableCell style={{color:"blue"}}>Total-Price</TableCell>
                             
+                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {orders.map((order) => (
+                            <TableRow
+                                key={order._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell  scope="row">
+                                    {order.order.productName}
+                                </TableCell>
+                                <TableCell >{order.order.sellerName}</TableCell>
+                                <TableCell >{order.order.city}</TableCell>
+                                <TableCell >{order.order.price}</TableCell>
+                                <TableCell >{order.quantity}</TableCell>
+                                <TableCell >{total}</TableCell>
+                                <TableCell >
+                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancle</Button></TableCell>
+                                <TableCell >{order.payment ?
+                                    'Paid' :
+                                    // <Link to={`/dashboard/payment/${order._id}`}><Button variant="contained" style={{backgroundColor:'blue'}}>Pay</Button></Link>
+                                    <Button onClick={purchase} variant="contained" style={{backgroundColor:'blue'}}>Pay</Button>
+                                }</TableCell>
                             
-                            
-                        </Grid>
-                        <Grid xs={2} sm={4} md={3} >
-                            
-                            <Typography variant="h6" sx={{textAlign:'left',fontWeight:'800',marginTop: '40px'}}>Price: {order.order.price}.00Tk </Typography>
-                            
-                        </Grid>
-                        <Grid xs={2} sm={4} md={3} style={{marginTop:'25px'}}>
-                        <Button variant="contained" style={{backgroundColor:'#e64088'}} onClick={()=>handledelete(order._id)}>Delete</Button>
-                        <Button variant="contained" style={{marginLeft:'10px'}}>Pay</Button>
+                            </TableRow>
+                        ))}
+
                         
-                        </Grid>
-               </Grid>
-            </Box>)
-        }
+                    </TableBody>
+                    {/* <p>Total: {total.toFixed(2)}</p>
+                    <p>
+                        {total.payment ?
+                            'Paid' :
+                            <Link to={`/dashboard/payment`}><button>Pay</button></Link>}
+                    </p> */}
+                </Table>
+            </TableContainer>
+        
         </Container>
     );
 };

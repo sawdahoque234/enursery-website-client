@@ -22,6 +22,7 @@ import HomeProducts from './Pages/Home/HomeProducts/HomeProducts';
 import Gallery from './Pages/Home/Gallery/Gallery';
 import Team from './Pages/Home/Team/Team';
 import NotFound from './Pages/Home/NotFound/NotFound';
+import MyOrders from './Pages/Dashboard/MyOrders/MyOrders';
 
 function App() {
   return (
@@ -57,6 +58,9 @@ function App() {
             
             <Route path="/register">
             <Register></Register>
+          </Route>
+            <Route path="/myorders">
+              <MyOrders></MyOrders>
           </Route>
             <Route path="/homeproducts">
               <HomeProducts></HomeProducts>
