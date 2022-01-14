@@ -1,4 +1,5 @@
-import { Typography,Container, Grid,Box,Button } from '@mui/material';
+import useAuth from "../../../hooks/useAuth";
+import { Container, Button, TableCell, TableContainer, Table, TableHead, TableRow, TableBody, Paper } from '@mui/material';
 import React,{useEffect,useState} from 'react';
 import { useForm } from "react-hook-form";
 
@@ -13,15 +14,25 @@ const AllOrder = () => {
         setOrderId(id);
         console.log(id);
       };
-    useEffect(() => {
-        fetch('https://protected-taiga-38505.herokuapp.com/orders')
-        .then(res=>res.json())
-        .then(data=>setOrders(data))
-    }, [orderId])
     
+    const { user } = useAuth();
 
+   
+    
+    useEffect(() => {
+        fetch('https://cryptic-fortress-77677.herokuapp.com/orders')
+        .then(res=>res.json())
+            .then(data => {
+                setOrders(data)
+
+            
+            })
+        
+        
+    }, [user.email])
+   
     const handledelete = order => {
-        const url = `https://protected-taiga-38505.herokuapp.com/orders/${order}`;
+        const url = `https://cryptic-fortress-77677.herokuapp.com/orders/${order}`;
         fetch(url, {
             method:"DELETE"
         })
@@ -29,17 +40,16 @@ const AllOrder = () => {
             .then(data => {
             console.log(data)
         if (data.deletedCount) {
-            alert('Are You Sure deleted This????')
+            alert('Are You Sure Deleted This Product???')
             const remaining=orders.filter(order=>order._id !==order)
             setOrders(remaining)
             window.location.reload();
         }
     })
-
     }
     const onSubmit = (data) => {
         console.log(data, orderId);
-        fetch(`https://protected-taiga-38505.herokuapp.com/${orderId}`, {
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/${orderId}`, {
           method: "PUT",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(data),
@@ -47,38 +57,51 @@ const AllOrder = () => {
           .then((res) => res.json())
           .then((result) => console.log(result));
       };
+    
+    
     return (
         <Container>
-            <Typography variant="h4" sx={{ fontWeight: '800', color: '#9907ed', paddingBottom: '50px' }} component="div">
-                Manage All Order
-</Typography>
-            {
-                orders.map(order =>
-                    <Box sx={{ flexGrow: 1 }} key={order._id}
-                >
-                        <Grid container style={{marginBottom:'30px'}}  spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
-                            <Grid  xs={2} sm={4} md={3} >
-                            <img
-              style={{ borderRadius: '10%',height:'150px',width:'80%', display: 'block', margin: 'auto' }} 
-              src={`data:image/*;base64,${order.order.image}`}  alt="" />
-                            </Grid>
-                            <Grid xs={2} sm={4} md={3} >
-                            <Typography variant="h5" sx={{textAlign:'left',fontWeight: '600', color: 'blue', paddingBottom: '7px', marginTop: '10px' }} component="div">
-                            {order.order.productName}
-                                </Typography>
-                                <Typography variant="body2" style={{color:'#e64088',textAlign:'left'}}>Ordered By :{order.name} </Typography>
-                            <Typography variant="h6" sx={{ textAlign:'left',fontWeight: '500', color: 'black' }} component="div">
-                            Sell By:{order.order.sellerName},{order.order.city}
-                            </Typography>
-                            <Typography variant="h6" sx={{textAlign:'left',fontWeight:'800'}}>Price: {order.order.price}.0Tk </Typography>
+            <h2>Manage All  Orders: {orders.length}</h2>
+            <TableContainer component={Paper}>
+                <Table sx={{}} aria-label="Appointments table">
+                    <TableHead>
+                        <TableRow >
+                            <TableCell style={{color:"blue"}}>order_Id</TableCell>
+                            <TableCell style={{color:"blue"}}>Customers</TableCell>
+                            <TableCell style={{color:"blue"}}>Product-Name</TableCell>
+                            <TableCell style={{color:"blue"}}>Seller</TableCell>
+                            <TableCell style={{color:"blue"}}>Seller-City</TableCell>
+                            <TableCell style={{color:"blue"}}>Per-Price</TableCell>
+                            <TableCell style={{ color: "blue" }}>Quantity</TableCell>
+                            <TableCell style={{color:"blue"}}>Total-Price</TableCell>
                             
-                            </Grid>
-                            <Grid xs={2} sm={4} md={3} >
-                            <Button variant="contained" style={{marginRight:'10px',marginTop:'20px'}}>Update</Button>
+                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {orders.map((order) => (
+                            <TableRow
+                                key={order._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell  scope="row">
+                                    {order.order._id}
+                                </TableCell>
+                                <TableCell  scope="row">
+                                    {order.name}
+                                </TableCell>
+                                <TableCell  scope="row">
+                                    {order.order.productName}
+                                </TableCell>
+                                <TableCell >{order.order.sellerName}</TableCell>
+                                <TableCell >{order.order.city}</TableCell>
+                                <TableCell >{order.order.price}</TableCell>
+                                <TableCell >{order.quantity}</TableCell>
+                                <TableCell >{order.order.price * order.quantity}</TableCell>
+                                <TableCell >
+                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
                                 
-                                <Button variant="contained" style={{backgroundColor:'#e64088',marginTop:'20px'}} onClick={()=>handledelete(order._id)}>Delete</Button>
-                            </Grid>
-                            <Grid xs={2} sm={4} md={3} style={{ marginTop:'20px'}} >
+                                <TableCell >
                                 <form   onSubmit={handleSubmit(onSubmit)}>
                                     <select style={{ height: '35px',padding:'6px'}}
                                 onClick={() => handleOrderId(order._id)}
@@ -89,13 +112,20 @@ const AllOrder = () => {
                                     <option value="ongoing">On Going</option>
                                     <option value="done">Done</option>
                                     </select>
-                                    <Button type="submit" variant="contained" style={{marginRight:'10px',backgroundColor:'salmon',marginLeft:'5px'}}>Confirm</Button>
+                                    <Button type="submit" variant="contained" style={{backgroundColor:'salmon'}}>Confirm</Button>
                                 </form>
-                            </Grid>
-                   </Grid>
-                </Box>)
-            }
-            </Container>
+                                </TableCell>    
+                                        
+                            </TableRow>
+                        ))}
+
+                        
+                    </TableBody>
+               
+                </Table>
+            </TableContainer>
+        
+        </Container>
     );
 };
 

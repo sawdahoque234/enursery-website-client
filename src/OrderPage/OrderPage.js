@@ -14,58 +14,39 @@ import useAuth from '../hooks/useAuth';
 const OrderPage = () => {
     const { productId} = useParams();
   const [product, setProduct] = useState([]);
-  const {_id,productName,price,city} = product;
+  const {_id,productName,price,city,sellerName} = product;
   
     const { register,reset, handleSubmit,control } = useForm();
   const { user } = useAuth();
   
   
     useEffect(() => {
-        fetch(`https://protected-taiga-38505.herokuapp.com/products/${productId}`)
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/products/${productId}`)
             .then(res => res.json())
             .then(data => setProduct(data))
     },[productId])
 
 
-  const onSubmit = data => {
-    const order = { productName,price,city }
-    data.order = order;
-    
-        data.status = "pending";
-    fetch('https://protected-taiga-38505.herokuapp.com/addorders', {
-        method: 'POST',
-        headers: {
-            'content-type':'application/json'
-        },
-        body:JSON.stringify(data)
-    })
-    .then(res=>res.json())
-    .then(result => {
-            if (result.insertedId) {
-                alert('Ordered proceed successfully!!!')
-                reset();
-            }
-        // console.log(result)
-    })
-
-
-    const id ={id:order._id,stock:data.quantity}
-    // console.log(ordered._id)
-    fetch('http://localhost:5000/updateStock', {
-      method: 'PUT',
+    const onSubmit = data => {
+      const order = { _id,productName,sellerName,price,city ,}
+      data.order = order;
+      data.status = "pending";
+  fetch('https://cryptic-fortress-77677.herokuapp.com/orders', {
+      method: 'POST',
       headers: {
           'content-type':'application/json'
       },
-      body:JSON.stringify(id)
+      body:JSON.stringify(data)
   })
   .then(res=>res.json())
   .then(result => {
-         
+          if (result.insertedId) {
+              alert('Ordered proceed successfully!!!')
+              reset();
+          }
+      console.log(result)
   })
-      
-  };
-
-  
+};
 
     return (
         <Container>
@@ -79,14 +60,14 @@ const OrderPage = () => {
               src={`data:image/*;base64,${product.image}`}  alt="" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-           {productName}
+           {product.productName}
                     </Typography>
                     {/* <Typography gutterBottom variant="body1" sx={{color:'green'}}>
           Sell By: {sellerName}, {product.city}
           </Typography> */}
           <Typography gutterBottom variant="h5" component="div">
                       
-                      Price: {price}.00 Tk
+                      Price: {product.price}.00 Tk
           </Typography>
           
           
@@ -143,7 +124,8 @@ const OrderPage = () => {
                 />)} />
                 
                 
-                <Button variant="contained"  style={{ backgroundColor: '#06d286',marginBottom:'40px' }} type="submit">Order Now</Button>
+                <Button variant="contained" style={{ backgroundColor: '#06d286', marginBottom: '40px' }} type="submit">Order Now</Button>
+                
                 <Link to="/dashboard/myorders" style={{textDecoration:'none',marginLeft:'20px'}}>
                 <Button variant="contained" style={{backgroundColor:'blue',marginBottom:'40px'}} type="submit">Review Orders</Button>
                 </Link>

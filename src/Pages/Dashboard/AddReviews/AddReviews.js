@@ -27,7 +27,7 @@ const AddReviews = () => {
         formData.append('description', description);
         formData.append('image', image);
 
-        fetch('https://protected-taiga-38505.herokuapp.com/reviews', {
+        fetch('https://cryptic-fortress-77677.herokuapp.com/reviews', {
             method: 'POST',
             body: formData
         })

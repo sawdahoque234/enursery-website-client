@@ -19,15 +19,19 @@ import {
 import useAuth from '../../../hooks/useAuth';
 import DashboardHome from '../DashboardHome/DashboardHome';
 import MyOrders from '../MyOrders/MyOrders';
-import Pay from '../Pay/Pay';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AllOrder from '../AllOrder/AllOrder';
 import AddProduct from '../AddProduct/AddProduct';
-import Reviews from '../../Home/Reviews/Reviews';
 import AddReviews from '../AddReviews/AddReviews';
+import HomeIcon from '@mui/icons-material/Home';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
 
-
-const drawerWidth = 200;
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+const drawerWidth = 150;
 
 function Dashboard(props) {
     const { window } = props;
@@ -42,7 +46,7 @@ function Dashboard(props) {
         setMobileOpen(!mobileOpen);
     };
     React.useEffect(() => {
-        fetch(`https://protected-taiga-38505.herokuapp.com/admin/${user?.email}`)
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/admin/${user?.email}`)
           .then((res) => res.json())
           .then((data) => {
             if (data[0]?.role === "admin") {
@@ -55,24 +59,24 @@ function Dashboard(props) {
     
     const drawer = (
         <div>
-            <Toolbar />
+            <Toolbar  />
             <Divider />
-            <Link to="/home" style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}>Home</Link><br />
-            <Link to={`${url}`} style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
-            >Dashboard</Link><br />
-            <Link to={`${url}/myorders`}style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
-            >My order</Link><br />
-            <Link to={`${url}/pay`}style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
-            >Pay</Link><br />
-            <Link to={`${url}/addreviews`}style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
-            >Review</Link><br />
+            <br />
+            <Link to="/home" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
+           
+            <Link to={`${url}/myorders`}style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
+            ><AddShoppingCartIcon sx={{mx:2}}/>My order</Link><br /><br/>
+            {/* <Link to={`${url}/pay`}style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
+            >Pay</Link><br /> */}
+            <Link to={`${url}/addreviews`}style={{marginRight:'20px',textDecoration:'none',fontSize:'18px'}}
+            ><BorderColorIcon sx={{ mx:2}}/>Review</Link><br /><br/>
             {/* adimn** */}
             {isAdmin &&
                 <Box>
-                <Link to={`${url}/makeAdmin`} style={{color:'#e64088',marginLeft:'20px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}>Make seller</Link><br />
+                <Link to={`${url}/makeAdmin`} style={{color:'#e64088',marginRight:'10px',marginLeft:'10px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}><AddModeratorIcon sx={{mx:1}}/>Make seller</Link><br /><br/>
                   
-                <Link to={`${url}/allorder`} style={{color:'#e64088',marginLeft:'20px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}>All Order</Link>  <br />
-                <Link to={`${url}/addproduct`} style={{color:'#e64088',marginLeft:'20px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}>Add Product</Link>  <br />
+                    <Link to={`${url}/allorder`} style={{ color: '#e64088', marginRight: '20px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><ShoppingCartIcon sx={{mx:2}}/>All Order</Link>  <br /><br/>
+                    <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br />
                 
                 
             </Box>}
@@ -153,12 +157,11 @@ function Dashboard(props) {
                     <Route path={`${path}/myorders`}>
                         <MyOrders></MyOrders>
                     </Route>
+                  
                     <Route path={`${path}/addreviews`}>
                         <AddReviews></AddReviews>
                     </Route>
-                    <Route path={`${path}/pay`}>
-                        <Pay></Pay>
-                    </Route>
+                    
                     <Route path={`${path}/makeAdmin`}>
                         <MakeAdmin></MakeAdmin>
                     </Route>
@@ -177,10 +180,7 @@ function Dashboard(props) {
 }
 
 Dashboard.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
+   
     window: PropTypes.func,
 };
 

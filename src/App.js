@@ -23,6 +23,7 @@ import Gallery from './Pages/Home/Gallery/Gallery';
 import Team from './Pages/Home/Team/Team';
 import NotFound from './Pages/Home/NotFound/NotFound';
 import MyOrders from './Pages/Dashboard/MyOrders/MyOrders';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <PrivateRoute path="/orderpage/:productId">
               <Orderpage></Orderpage>
           </PrivateRoute>
+            
             <Route path="/products">
               <Products></Products>
             </Route>
@@ -89,7 +91,10 @@ function App() {
           </Switch>
         </Router>
 </AuthProvider>
-
+<MessengerCustomerChat
+    pageId="111015531462259"
+    appId="1592081161136132"
+  />
     </div>
   );
 }

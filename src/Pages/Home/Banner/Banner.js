@@ -5,6 +5,7 @@ import { Button} from '@mui/material';
 import bannerBg from '../../../imgs/l.jpg'
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
+
 import './Banner.css'
 const banner = {
     background: `url(${bannerBg})`,
@@ -30,8 +31,11 @@ const Banner = () => {
                     <Button variant="contained" sx={{m:2,py:1,px:3}} style={{backgroundColor:'#9907ed'}}>Get Started</Button></Link>
         </Grid>
       </Grid>
+      
     </Box>
+    
     );
+    
     // ****
     
 };

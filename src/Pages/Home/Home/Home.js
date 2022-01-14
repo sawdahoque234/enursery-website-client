@@ -26,6 +26,7 @@ const Home = () => {
             <Reviews></Reviews>
 
             <Footer></Footer>
+ 
     </Box>
     );
 };

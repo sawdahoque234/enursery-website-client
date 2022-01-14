@@ -14,6 +14,7 @@ const AddProduct = () => {
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [city, setCity] = useState('');
+    const [phone, setPhone] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
@@ -29,11 +30,12 @@ const AddProduct = () => {
         formData.append('price', price);
         formData.append('stock', stock);
         formData.append('city', city);
+        formData.append('phone', phone);
         formData.append('sellerName', sellerName);
         formData.append('description', description);
         formData.append('image', image);
 
-        fetch('https://protected-taiga-38505.herokuapp.com/products', {
+        fetch('https://cryptic-fortress-77677.herokuapp.com/products', {
             method: 'POST',
             body: formData
         })
@@ -83,7 +85,8 @@ const AddProduct = () => {
                                 required
                                
                     onChange={e => setProductName(e.target.value)}
-                    variant="outlined" />
+                                    variant="outlined" />
+                                
                 <TextField
                     sx={{ width: '80%',marginBottom:'10px' }}
                     label="Product Price"
@@ -111,7 +114,17 @@ const AddProduct = () => {
                                 
                     required
                     onChange={e => setCity(e.target.value)}
-                    variant="outlined" />
+                                    variant="outlined" />
+                <TextField
+                    sx={{ width: '80%',marginBottom:'10px' }}
+                    label="Phone"
+                                type="integer"
+                               
+                                
+                    onChange={e => setPhone(e.target.value)}
+                                    variant="outlined" />
+
+                                
                 <TextField
                     sx={{ width: '80%' ,marginBottom:'10px'}}
                     label="Description"
@@ -127,6 +140,7 @@ const AddProduct = () => {
         <IconButton color="primary" aria-label="upload picture" component="span">
           <PhotoCamera />
                             </IconButton>
+                
                             <br />
                 <Button variant="contained" type="submit">
                     Add Product

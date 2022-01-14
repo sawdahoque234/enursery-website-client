@@ -1,33 +1,71 @@
 import useAuth from "../../../hooks/useAuth";
 import { Typography,Container, Grid,Box,Button, TableCell, TableContainer, Table, TableHead, TableRow, TableBody, Paper } from '@mui/material';
 import { useParams } from 'react-router';
-
+import StripeCheckout from 'react-stripe-checkout';
 import React,{useEffect,useState} from 'react';
-import { Link } from "react-router-dom";
+import Radio from '@mui/material/Radio';
+import { useForm } from "react-hook-form";
 
 const MyOrders = () => {
     const { id } = useParams();
-    // const [products, setProducts] = useState([]);
-    // const {_id,productName,image,sellerName,city,stock,price} = product;
-    
-
+    const KEY = 'pk_test_51JwJJWDWruHMZxwUglXbLhGZiMaU9YsolRgee685pDwFLGfda9wr10ov7SXgdvH8aZ6bVmadQbJqAOpcCqt8MAxS00HfxccRBH';
     const [orders, setOrders] = useState([]);
-    const { user} = useAuth();
-    
+    const { register, handleSubmit } = useForm();
+    const [orderId, setOrderId] = useState("");
+        
+    const { user } = useAuth();
+
+    // const [product,setProduct] = useState({
+    //     name: "reactabbb",price:'22'
+    // })
+
+   
+    const makePayment = token => {
+        const body = {
+            token,
+        }
+        const headers = {
+            "Content-Type":"application/json"
+        }
+        return fetch('https://cryptic-fortress-77677.herokuapp.com/payment', {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(response => {
+            console.log("Response", response)
+            const { status } = response;
+            console.log("Status",status)
+        })
+        .catch(error=>console.log(error))
+    }
+
     useEffect(() => {
-        fetch(`https://protected-taiga-38505.herokuapp.com/orders/${user.email}`)
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/orders/${user.email}`)
         .then(res=>res.json())
             .then(data => {
                 setOrders(data)
-            console.log(orders)
 
             
             })
         
+        
     }, [user.email])
-   
+    const handleOrderId = (id) => {
+        setOrderId(id);
+        console.log(id);
+      };
+      const onSubmit = (data) => {
+        console.log(data, orderId);
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/${orderId}`, {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((result) => console.log(result));
+      };
     const handledelete = order => {
-        const url = `https://protected-taiga-38505.herokuapp.com/orders/${order}`;
+        const url = `https://cryptic-fortress-77677.herokuapp.com/orders/${order}`;
         fetch(url, {
             method:"DELETE"
         })
@@ -41,48 +79,10 @@ const MyOrders = () => {
             window.location.reload();
         }
     })
-
     }
-   
-let total = 0;
-for (const order of orders) {
-if (!order.quantity) {
-order.quantity = 1;
-}
-total =  order.order.price * order.quantity;
-    }
-    //payment
-    // useEffect(() => {
-    //     fetch('https://protected-taiga-38505.herokuapp.com/products')
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             const matchedProducts = data.find(products => products._id === id)
-    //             setProducts(matchedProducts);
-    //         })
-    // }, [id])
-    const purchase =()=>{
-        const info = {
-            productName: orders?.name,
-            image: orders?.image,
-            total_amount: orders?.price,
-            cus_name: user?.displayName,
-            cus_email:user?.email
-            
-        }
-        fetch(`http://localhost:5000/init`,{
-            method: 'POST',
-            headers:{
-                "content-type" :"application/json"
-            },
-            body: JSON.stringify(info)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            window.location.replace(data)
-        })
-        
-    }
+    
+    
+    
     return (
         <Container>
             <h2>My Orders: {orders.length}</h2>
@@ -98,6 +98,7 @@ total =  order.order.price * order.quantity;
                             <TableCell style={{color:"blue"}}>Total-Price</TableCell>
                             
                             <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                            <TableCell style={{color:"blue"}} align="right">Payment Method</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -113,26 +114,42 @@ total =  order.order.price * order.quantity;
                                 <TableCell >{order.order.city}</TableCell>
                                 <TableCell >{order.order.price}</TableCell>
                                 <TableCell >{order.quantity}</TableCell>
-                                <TableCell >{total}</TableCell>
+                                <TableCell >{order.order.price * order.quantity}</TableCell>
                                 <TableCell >
-                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancle</Button></TableCell>
-                                <TableCell >{order.payment ?
-                                    'Paid' :
-                                    // <Link to={`/dashboard/payment/${order._id}`}><Button variant="contained" style={{backgroundColor:'blue'}}>Pay</Button></Link>
-                                    <Button onClick={purchase} variant="contained" style={{backgroundColor:'blue'}}>Pay</Button>
-                                }</TableCell>
-                            
+                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
+                               
+                                <TableCell >
+                                <StripeCheckout
+                                        name="eNursery.com"
+                                        
+              billingAddress
+              shippingAddress
+              description={`Your total is ${order.order.price * order.quantity}`}
+              token={makePayment}
+              stripeKey={KEY}
+            />
+                                </TableCell>   
+                                
+                                <TableCell >
+                                <form   onSubmit={handleSubmit(onSubmit)}>
+                                    <select style={{ height: '30px'}}
+                                onClick={() => handleOrderId(order._id)}
+                                {...register("status")}
+                                >
+                                        <option value={order.status}>{order.status}</option>
+                                    <option value="done">Done</option>
+                                    </select>
+                                    <Button type="submit" variant="contained" style={{backgroundColor:'salmon'}}>COD</Button>
+                                </form>
+                                </TableCell >
+                                    
+                                        
                             </TableRow>
                         ))}
 
                         
                     </TableBody>
-                    {/* <p>Total: {total.toFixed(2)}</p>
-                    <p>
-                        {total.payment ?
-                            'Paid' :
-                            <Link to={`/dashboard/payment`}><button>Pay</button></Link>}
-                    </p> */}
+               
                 </Table>
             </TableContainer>
         
