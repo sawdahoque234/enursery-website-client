@@ -31,6 +31,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AllProducts from '../AllProducts/AllProducts';
 const drawerWidth = 150;
 
 function Dashboard(props) {
@@ -77,6 +78,7 @@ function Dashboard(props) {
                   
                     <Link to={`${url}/allorder`} style={{ color: '#e64088', marginRight: '20px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><ShoppingCartIcon sx={{mx:2}}/>All Order</Link>  <br /><br/>
                     <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br />
+                    <Link to={`${url}/allproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Manage All Product</Link>  <br />
                 
                 
             </Box>}
@@ -171,6 +173,9 @@ function Dashboard(props) {
                     <Route path={`${path}/addproduct`}>
                         <AddProduct
                         ></AddProduct>
+                    </Route>
+                    <Route path={`${path}/allproduct`}>
+                        <AllProducts></AllProducts>
                     </Route>
                     
                 </Switch>

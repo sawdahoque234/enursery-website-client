@@ -14,7 +14,7 @@ import useAuth from '../hooks/useAuth';
 const OrderPage = () => {
     const { productId} = useParams();
   const [product, setProduct] = useState([]);
-  const {_id,productName,price,city,sellerName} = product;
+  const {_id,productName,price,city,sellerName,stock} = product;
   
     const { register,reset, handleSubmit,control } = useForm();
   const { user } = useAuth();
@@ -31,6 +31,7 @@ const OrderPage = () => {
       const order = { _id,productName,sellerName,price,city ,}
       data.order = order;
       data.status = "pending";
+      handleUpdateStock(data.quantity,product.productName,product.stock);
   fetch('https://cryptic-fortress-77677.herokuapp.com/orders', {
       method: 'POST',
       headers: {
@@ -47,6 +48,24 @@ const OrderPage = () => {
       console.log(result)
   })
 };
+// *********************cart**************
+const handleUpdateStock=(quantity,name,stock)=>{
+  const TotalQuantity = Number(stock)- Number(quantity); 
+  const product={name:name,quantity:TotalQuantity }
+console.log(product, "fromdata")
+fetch('https://cryptic-fortress-77677.herokuapp.com/updateStock', {
+      method: 'PUT',
+      headers: {
+          'content-type':'application/json'
+      },
+      body:JSON.stringify(product)
+  })
+  .then(res=>res.json())
+  .then(result => {
+      console.log(result)
+  })
+
+}
 
     return (
         <Container>
@@ -70,6 +89,9 @@ const OrderPage = () => {
                       Price: {product.price}.00 Tk
           </Typography>
           
+          {stock ? <Typography className="mr-4 ">In Stock: {stock}</Typography>
+                    :
+                    <Typography className="mr-4 text-red-400">Out of Stock</Typography>}
           
           <Typography variant="body2" sx={{textAlign:'left'}} color="text.secondary">
             {product.description}
@@ -101,11 +123,15 @@ const OrderPage = () => {
                 control={control}
                 render={({ field: {value } }) => (
                     <TextField sx={{ width: '400px', marginBottom: '10px' }} size="small" value={product.price} />)} />
+                
                 {/* **** */}
+
                 <Controller 
                 control={control}
                 render={({ field: { value } }) => (
-                    <TextField sx={{ width: '400px', marginBottom: '10px' }} placeholder="Quantity" defaultValue="1" {...register("quantity", { required: true })} />)} />
+                    <TextField sx={{ width: '400px', marginBottom: '10px' }}
+                     placeholder="Quantity" defaultValue="1" {...register("quantity", { required: true })} />)} />
+                
                 {/* **** */}
                 <Controller 
                 control={control}
