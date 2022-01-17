@@ -19,7 +19,10 @@ const Product = ({ product }) => {
                 <h1 className="product-name">{productName}</h1>
           <p>Sell By: {sellerName}, {city} {phone}</p>
                 <h3>Price:  {price}.00 Tk</h3>
-                {/* <p id="stock">only  <span id="stocknmb"> {stock} </span> left in stock - order soon</p> */}
+                {stock?                     <p id="stock">only  <span id="stocknmb"> {stock} </span> left in stock - order soon</p>
+
+                    :
+                    <p className="mr-4 text-red-400">Out of Stock</p>} 
                 <Link to={`/orderpage/${_id}`} id="link1">
         <button id="button1">
         Buy Now

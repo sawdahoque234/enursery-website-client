@@ -1,28 +1,18 @@
-import useAuth from "../../../hooks/useAuth";
-import { Container, Button, TableCell, TableContainer, Table, TableHead, TableRow, TableBody, Paper } from '@mui/material';
+import { Typography,Container, Grid,Box,Button } from '@mui/material';
 import React,{useEffect,useState} from 'react';
+import { Link } from 'react-router-dom';
+const ManageProduct = () => {
+    const [products, setProducts] = useState([])
 
-const AllProducts = () => {
-    const [products , setProducts] = useState([]);
-   
-    const { user } = useAuth();
 
-   
-    
     useEffect(() => {
-        fetch('http://localhost:5000/aaproducts')
-        .then(res=>res.json())
-            .then(data => {
-                setProducts(data)
+        fetch('http://localhost:5000/allproducts')
+            .then(res => res.json())
+            .then(data => setProducts(data));
+    }, [])
 
-            
-            })
-        
-        
-    }, [user.email])
-   
     const handledelete = product => {
-        const url = `http://localhost:5000/allproducts/${product}`;
+        const url = `http://localhost:5000/products/${product}`;
         fetch(url, {
             method:"DELETE"
         })
@@ -30,64 +20,53 @@ const AllProducts = () => {
             .then(data => {
             console.log(data)
         if (data.deletedCount) {
-            alert('Are You Sure Deleted This Product???')
-            const remaining=products.filter(product=>product._id !==product)
+            alert('Product Deleted successfully!!!')
+            const remaining = products.filter(product => product._id !== product)
+            
             setProducts(remaining)
             window.location.reload();
         }
     })
-    }
-   
+
+}
+
     return (
         <Container>
-            <h2>Manage All  Products: {products.length}</h2>
-            <TableContainer component={Paper}>
-                <Table sx={{}} aria-label="Appointments table">
-                    <TableHead>
-                        <TableRow >
-                            <TableCell style={{color:"blue"}}>order_Id</TableCell>
-                            <TableCell style={{color:"blue"}}>Customers</TableCell>
-                            <TableCell style={{color:"blue"}}>Product-Name</TableCell>
-                            <TableCell style={{color:"blue"}}>Seller</TableCell>
-                            <TableCell style={{color:"blue"}}>Seller-City</TableCell>
-                            <TableCell style={{color:"blue"}}>Per-Price</TableCell>
-                            <TableCell style={{ color: "blue" }}>Quantity</TableCell>
-                            <TableCell style={{color:"blue"}}>Total-Price</TableCell>
-                            
-                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {products.map((product) => (
-                            <TableRow
-                                key={product._id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell  scope="row">
-                                    {product._id}
-                                </TableCell>
-                                <TableCell  scope="row">
-                                    {product.name}
-                                </TableCell>
-                                <TableCell  scope="row">
-                                    {product.productName}
-                                </TableCell>
-                                {/* <TableCell >{productsellerName}</TableCell> */}
-                                <TableCell >{product.city}</TableCell>
-                                <TableCell >{product.price}</TableCell>
-                                <TableCell >
-                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(product._id)}>Cancel</Button></TableCell>
-                            </TableRow>
-                        ))}
-
-                        
-                    </TableBody>
-               
-                </Table>
-            </TableContainer>
-        
-        </Container>
+            <Typography variant="h4" sx={{ fontWeight: '800', color: '#9907ed', paddingBottom: '50px' }} component="div">
+                Manage All Product
+</Typography>
+            {
+                products.map(product =>
+                    <Box sx={{ flexGrow: 1 }} key={product._id}
+                >
+                        <Grid container style={{marginBottom:'30px',border:'1px solid gray',borderRadius:'5%'}} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
+                            <Grid  xs={2} sm={4} md={3} >
+                            <img  src={`data:image/*;base64,${product.image}`} style={{height:'100px',borderRadius:'5%',margin:'20px'}}  alt="" />
+                            </Grid>
+                            <Grid xs={2} sm={4} md={5} >
+                                <Typography variant="h6" sx={{ fontWeight: '800', color: '#06d286', marginTop: '10px' }} component="div">
+                                {product.productName}
+                                </Typography>
+                                
+                                <Typography variant="h6">Price: {product.price}.00 Tk </Typography>
+                               <Typography variant="body1" sx={{color:'red'}}>In Stock: {product.stock} </Typography>
+                                <Typography variant="body2">Seller: {product.sellerName} , {product.city} </Typography>
+                                <Typography variant="body2"  color="text.secondary">
+                                Product-id:{product._id}
+                                 </Typography>
+                            </Grid>
+                            <Grid xs={2} sm={3} md={4} >
+                            <Link to="/dashboard/addproduct" style={{ textDecoration: 'none' }}>
+                            <Button variant="contained" style={{ marginRight: '10px', marginTop: '20px' ,backgroundColor:'#9907ed'}}>Add</Button>
+                                 </Link>
+                                
+                                <Button variant="contained" style={{backgroundColor:'#e64088',marginTop: '20px'}} onClick={()=>handledelete(product._id)}>Delete</Button>
+                            </Grid>
+                   </Grid>
+                </Box>)
+            }
+            </Container>
     );
 };
 
-export default AllProducts;
+export default ManageProduct;

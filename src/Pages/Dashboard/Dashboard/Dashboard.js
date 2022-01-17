@@ -29,10 +29,11 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AllProducts from '../AllProducts/AllProducts';
-const drawerWidth = 150;
+import Allusers from '../Allusers/Allusers';
+const drawerWidth = 180;
 
 function Dashboard(props) {
     const { window } = props;
@@ -63,7 +64,7 @@ function Dashboard(props) {
             <Toolbar  />
             <Divider />
             <br />
-            <Link to="/home" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
+            <Link to="/products" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
            
             <Link to={`${url}/myorders`}style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
             ><AddShoppingCartIcon sx={{mx:2}}/>My order</Link><br /><br/>
@@ -77,8 +78,9 @@ function Dashboard(props) {
                 <Link to={`${url}/makeAdmin`} style={{color:'#e64088',marginRight:'10px',marginLeft:'10px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}><AddModeratorIcon sx={{mx:1}}/>Make seller</Link><br /><br/>
                   
                     <Link to={`${url}/allorder`} style={{ color: '#e64088', marginRight: '20px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><ShoppingCartIcon sx={{mx:2}}/>All Order</Link>  <br /><br/>
-                    <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br />
-                    <Link to={`${url}/allproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Manage All Product</Link>  <br />
+                    <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br /><br />
+                    <Link to={`${url}/allproduct`} style={{ color: 'black', marginLeft: '8px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><Inventory2Icon sx={{mx:1}}/>Manage All <br />Products</Link>  <br />
+                    {/* <Link to={`${url}/allusers`} style={{ color: 'black', marginLeft: '8px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><Inventory2Icon sx={{mx:1}}/>Manage All <br />Users</Link>  <br /> */}
                 
                 
             </Box>}
@@ -176,6 +178,10 @@ function Dashboard(props) {
                     </Route>
                     <Route path={`${path}/allproduct`}>
                         <AllProducts></AllProducts>
+                    </Route>
+                    
+                    <Route path={`${path}/allusers`}>
+                        <Allusers></Allusers>
                     </Route>
                     
                 </Switch>
