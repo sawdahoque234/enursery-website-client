@@ -16,6 +16,7 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import useAuth from '../../../hooks/useAuth';
 import DashboardHome from '../DashboardHome/DashboardHome';
 import MyOrders from '../MyOrders/MyOrders';
@@ -24,7 +25,6 @@ import AllOrder from '../AllOrder/AllOrder';
 import AddProduct from '../AddProduct/AddProduct';
 import AddReviews from '../AddReviews/AddReviews';
 import HomeIcon from '@mui/icons-material/Home';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -32,7 +32,8 @@ import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AllProducts from '../AllProducts/AllProducts';
-import Allusers from '../Allusers/Allusers';
+import TotalOrder from '../TotalOrder/TotalOrder';
+import Alluser from '../Alluser/Alluser';
 const drawerWidth = 180;
 
 function Dashboard(props) {
@@ -41,6 +42,7 @@ function Dashboard(props) {
     let { path, url } = useRouteMatch();
     const { user } = useAuth()
     const [isAdmin, setIsAdmin] =React.useState(false);
+    const [isSeller, setIsSeller] =React.useState(false);
     const {logout} = useAuth()
 
 
@@ -58,32 +60,61 @@ function Dashboard(props) {
             }
           });
       }, [user?.email]);
+      //seller
+    React.useEffect(() => {
+        fetch(`http://localhost:5000/seller/${user?.email}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data[0]?.role === "seller") {
+              setIsSeller(true);
+            } else {
+              setIsSeller(false);
+            }
+          });
+      }, [user?.email]);
     
     const drawer = (
         <div>
             <Toolbar  />
             <Divider />
             <br />
-            <Link to="/products" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
+            {
+                user &&
+                <Box>
+                    <Link to="/products" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
            
-            <Link to={`${url}/myorders`}style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
-            ><AddShoppingCartIcon sx={{mx:2}}/>My order</Link><br /><br/>
-            {/* <Link to={`${url}/pay`}style={{marginLeft:'20px',textDecoration:'none',fontSize:'18px'}}
-            >Pay</Link><br /> */}
-            <Link to={`${url}/addreviews`}style={{marginRight:'20px',textDecoration:'none',fontSize:'18px'}}
-            ><BorderColorIcon sx={{ mx:2}}/>Review</Link><br /><br/>
+           <Link to={`${url}/myorders`}style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
+           ><AddShoppingCartIcon sx={{mx:2}}/>My order</Link><br /><br/>
+           
+           <Link to={`${url}/addreviews`}style={{marginRight:'20px',textDecoration:'none',fontSize:'18px'}}
+           ><BorderColorIcon sx={{ mx:2}}/>Review</Link><br /><br/>
+
+                </Box>
+            }
+            
+            {
+                isSeller &&
+                <Box>
+                   <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br /><br /> 
+                   <Link to={`${url}/order`} style={{ color: '#e64088', marginRight: '20px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><ShoppingCartIcon sx={{mx:2}}/>Total Order</Link>  <br /><br/>
+
+                </Box>
+            }
             {/* adimn** */}
             {isAdmin &&
                 <Box>
+                    
                 <Link to={`${url}/makeAdmin`} style={{color:'#e64088',marginRight:'10px',marginLeft:'10px',textDecoration:'none',fontSize:'18px',fontWeight:'600'}}><AddModeratorIcon sx={{mx:1}}/>Make seller</Link><br /><br/>
                   
                     <Link to={`${url}/allorder`} style={{ color: '#e64088', marginRight: '20px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><ShoppingCartIcon sx={{mx:2}}/>All Order</Link>  <br /><br/>
                     <Link to={`${url}/addproduct`} style={{ color: '#e64088', marginLeft: '10px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><AddCircleOutlinedIcon sx={{mx:1}}/>Add Product</Link>  <br /><br />
+                    <Link to={`${url}/alluser`} style={{ color: '#e64088', marginLeft: '12px',marginRight: '22px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}>< PersonOutlineIcon sx={{mx:1}}/>All Users</Link>  <br /><br />
+                
                     <Link to={`${url}/allproduct`} style={{ color: 'black', marginLeft: '8px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><Inventory2Icon sx={{mx:1}}/>Manage All <br />Products</Link>  <br />
-                    {/* <Link to={`${url}/allusers`} style={{ color: 'black', marginLeft: '8px', textDecoration: 'none', fontSize: '18px', fontWeight: '600' }}><Inventory2Icon sx={{mx:1}}/>Manage All <br />Users</Link>  <br /> */}
+                    
+            </Box>
                 
-                
-            </Box>}
+            }
            
         </div>
     );
@@ -179,9 +210,13 @@ function Dashboard(props) {
                     <Route path={`${path}/allproduct`}>
                         <AllProducts></AllProducts>
                     </Route>
+                    <Route path={`${path}/alluser`}>
+                        <Alluser></Alluser>
+                    </Route>
                     
-                    <Route path={`${path}/allusers`}>
-                        <Allusers></Allusers>
+                    
+                    <Route path={`${path}/order`}>
+                        <TotalOrder></TotalOrder>
                     </Route>
                     
                 </Switch>

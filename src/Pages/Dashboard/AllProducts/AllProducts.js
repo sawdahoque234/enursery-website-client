@@ -6,13 +6,13 @@ const ManageProduct = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/allproducts')
+        fetch('https://cryptic-fortress-77677.herokuapp.com/allproducts')
             .then(res => res.json())
             .then(data => setProducts(data));
     }, [])
 
     const handledelete = product => {
-        const url = `http://localhost:5000/products/${product}`;
+        const url = `https://cryptic-fortress-77677.herokuapp.com/products/${product}`;
         fetch(url, {
             method:"DELETE"
         })

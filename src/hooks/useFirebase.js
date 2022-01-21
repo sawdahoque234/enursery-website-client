@@ -9,6 +9,7 @@ const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
+    const [role, setRole] = useState('');
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -89,8 +90,16 @@ const useFirebase = () => {
         });
         return () => unsubscribed;
     }, [auth])
-
-   
+//role
+// useEffect(() => {
+// fetch(`http://localhost:5000/checkrole/${order?.productName}`)
+// .then((res)=>res.json())
+// .then((result)=>{
+//     console.log(result)
+//     setRole(result);
+// })
+// },[user.productName])
+// console.log(role)
 //logout
     const logout = () => {
         setIsLoading(true);

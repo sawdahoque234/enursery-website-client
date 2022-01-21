@@ -3,7 +3,7 @@ import { Container, Button, TableCell, TableContainer, Table, TableHead, TableRo
 import React,{useEffect,useState} from 'react';
 import { useForm } from "react-hook-form";
 
-const AllOrder = () => {
+const Alluser = () => {
     const [orderId, setOrderId] = useState("");
     const [orders, setOrders] = useState([]);
     // const [status, setStatus] = useState("");
@@ -61,21 +61,14 @@ const AllOrder = () => {
     
     return (
         <Container>
-            <h2>Manage All  Orders: {orders.length}</h2>
+            <h2>All  Users: {orders.length}</h2>
             <TableContainer component={Paper}>
                 <Table sx={{}} aria-label="Appointments table">
                     <TableHead>
                         <TableRow >
-                            <TableCell style={{color:"blue"}}>Order_Id</TableCell>
-                            <TableCell style={{color:"blue"}}>Product-Name</TableCell>
-                            {/* <TableCell style={{color:"blue"}}>Seller</TableCell> */}
-                            {/* <TableCell style={{color:"blue"}}>Seller-City</TableCell> */}
-                            <TableCell style={{color:"blue"}}>Per-Price</TableCell>
-                            <TableCell style={{ color: "blue" }}>Quantity</TableCell>
-                            <TableCell style={{color:"blue"}}>Total-Price</TableCell>
-                            
-                            <TableCell style={{color:"blue"}} align="right">Status</TableCell>
-                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                            <TableCell style={{color:"blue"}}>User_Name</TableCell>
+                            <TableCell style={{color:"blue"}}>User_Email </TableCell>
+                            <TableCell style={{color:"blue"}}>User_Address </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -86,22 +79,19 @@ const AllOrder = () => {
                             >
                                 
                                 <TableCell  scope="row">
-                                    {order._id}
+                                    {order.name}
                                 </TableCell>
                                 <TableCell  scope="row">
-                                    {order.order.productName}
+                                    {order.email}
                                 </TableCell>
-                                {/* <TableCell >{order.order.sellerName}</TableCell> */}
-                                {/* <TableCell >{order.order.city}</TableCell> */}
-                                <TableCell >{order.order.price}</TableCell>
-                                <TableCell >{order.quantity}</TableCell>
-                                <TableCell >{order.order.price * order.quantity}</TableCell>
-                                <TableCell >{order.status}</TableCell>
+                                <TableCell  scope="row">
+                                    {order.address}
+                                </TableCell>
+                                
 
                                 <TableCell >
-                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
+                                <Button variant="contained" style={{ backgroundColor: '#e64088',marginRight:'20px' }} onClick={() =>handledelete(order._id)}>Cancel</Button>
                                 
-                                <TableCell >
                                 <Button variant="contained" style={{ backgroundColor: '#41469c' }} >Update</Button></TableCell>
 
                               
@@ -119,4 +109,4 @@ const AllOrder = () => {
     );
 };
 
-export default AllOrder;
+export default Alluser;

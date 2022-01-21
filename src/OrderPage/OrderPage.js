@@ -53,7 +53,7 @@ const handleUpdateStock=(quantity,name,stock)=>{
   const TotalQuantity = Number(stock)- Number(quantity); 
   const product={name:name,quantity:TotalQuantity }
 console.log(product, "fromdata")
-fetch('http://localhost:5000/updateStock', {
+fetch('https://cryptic-fortress-77677.herokuapp.com/updateStock', {
       method: 'PUT',
       headers: {
           'content-type':'application/json'

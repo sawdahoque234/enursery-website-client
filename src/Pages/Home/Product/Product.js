@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Product.css'
 
 const Product = ({ product }) => {
-  const { _id, productName, image, sellerName, city, stock, price,phone } = product;
+  const { _id, productName, image, sellerName,sellerEmail, city, stock, price,phone } = product;
     
  
     

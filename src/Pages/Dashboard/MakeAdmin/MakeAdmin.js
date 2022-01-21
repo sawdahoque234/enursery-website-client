@@ -7,7 +7,7 @@ const MakeAdmin = () => {
 
    
     const adminSubmit = (data) => {
-        fetch("https://cryptic-fortress-77677.herokuapp.com/makeAdmin", {
+        fetch("http://localhost:5000/makeAdmin", {
           method: "PUT",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(data),

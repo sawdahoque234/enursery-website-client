@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, Grid, Input, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import VideoPlayer from 'react-video-js-player';
 
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -16,6 +17,7 @@ const AddProduct = () => {
     const [city, setCity] = useState('');
     const [phone, setPhone] = useState('');
     const [sellerName, setSellerName] = useState('');
+    const [sellerEmail, setSellerEmail] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -32,6 +34,7 @@ const AddProduct = () => {
         formData.append('city', city);
         formData.append('phone', phone);
         formData.append('sellerName', sellerName);
+        formData.append('sellerEmail', sellerEmail);
         formData.append('description', description);
         formData.append('image', image);
 
@@ -63,21 +66,23 @@ const AddProduct = () => {
                         Add Product
                     </Typography>
                     <form onSubmit={handleSubmit}>
-                {/* <TextField
-                    sx={{ width: '80%',marginBottom:'10px' }}
-                    defaultValue={user.displayName}
-                                required
-                     label='seller'          
-                    onChange={e => setName(e.target.value)}
-                    variant="outlined" /> */}
+                
                                 <TextField
                     sx={{ width: '80%',marginBottom:'10px' }}
                     label="Seller Name"
                                 type="integer"
                                
-                               defaultValue={user.displayName} 
+                            //    defaultValue={user.displayName} 
                     required
                     onChange={e => setSellerName(e.target.value)}
+                    variant="outlined" />
+                                <TextField
+                    sx={{ width: '80%',marginBottom:'10px' }}
+                    label="Seller Email"
+                                type="integer"
+                               
+                    required
+                    onChange={e => setSellerEmail(e.target.value)}
                     variant="outlined" />
                 <TextField
                     sx={{ width: '80%',marginBottom:'10px' }}
@@ -124,7 +129,6 @@ const AddProduct = () => {
                     onChange={e => setPhone(e.target.value)}
                                     variant="outlined" />
 
-                                
                 <TextField
                     sx={{ width: '80%' ,marginBottom:'10px'}}
                     label="Description"

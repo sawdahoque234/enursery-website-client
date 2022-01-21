@@ -15,7 +15,7 @@ const Footer = () => {
             <Grid container rowSpacing={1} spacing={2} style={{ backgroundColor: '#1d2b39', color: 'white' }} sx={{p:1,mt:1}}>
         <Grid item xs={12} md={9}>
         <Typography >
-        Copyright © eNursery 2021. All rights reserved.              
+        Copyright © eNursery 2022. All rights reserved.              
         </Typography>
         </Grid>
                     <Grid item xs={12} md={3}>
