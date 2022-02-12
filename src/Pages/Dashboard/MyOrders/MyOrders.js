@@ -5,7 +5,9 @@ import StripeCheckout from 'react-stripe-checkout';
 import React,{useEffect,useState} from 'react';
 import Radio from '@mui/material/Radio';
 import { useForm } from "react-hook-form";
-
+import CancelIcon from '@mui/icons-material/Cancel';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import { Link } from "react-router-dom";
 const MyOrders = () => {
     const { id } = useParams();
     const KEY = 'pk_test_51JwJJWDWruHMZxwUglXbLhGZiMaU9YsolRgee685pDwFLGfda9wr10ov7SXgdvH8aZ6bVmadQbJqAOpcCqt8MAxS00HfxccRBH';
@@ -82,6 +84,9 @@ const MyOrders = () => {
     }
     
     
+    // const shipping = order.quantity > 0 ? 15 :0;
+    // const tax = (order.total + shipping) * 0.10;
+    
     
     return (
         <Container>
@@ -91,14 +96,18 @@ const MyOrders = () => {
                     <TableHead>
                         <TableRow >
                             <TableCell style={{color:"blue"}}>Product-Name</TableCell>
-                            <TableCell style={{color:"blue"}}>Seller</TableCell>
+                            <TableCell style={{color:"blue"}}>Seller-Name</TableCell>
                             <TableCell style={{color:"blue"}}>Seller-City</TableCell>
                             <TableCell style={{color:"blue"}}>Per-Price</TableCell>
                             <TableCell style={{ color: "blue" }}>Quantity</TableCell>
+                            <TableCell style={{ color: "blue" }}>Shipping</TableCell>
                             <TableCell style={{color:"blue"}}>Total-Price</TableCell>
                             
-                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                            <TableCell style={{color:"blue"}} align="right">Cancel</TableCell>
+                            <TableCell style={{color:"blue"}} align="right">Review</TableCell>
                             <TableCell style={{color:"blue"}} align="right">Payment Method</TableCell>
+                            <TableCell style={{color:"blue"}} align="right">Payment Method</TableCell>
+                            <TableCell style={{color:"blue"}} align="right">Return Product</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -114,32 +123,50 @@ const MyOrders = () => {
                                 <TableCell >{order.order.city}</TableCell>
                                 <TableCell >{order.order.price}</TableCell>
                                 <TableCell >{order.quantity}</TableCell>
-                                <TableCell >{order.order.price * order.quantity}</TableCell>
+                                <TableCell >{50}</TableCell>
+                                <TableCell >{order.order.price * order.quantity+50}</TableCell>
                                 <TableCell >
-                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
-                               
+                                <p variant="contained"  onClick={() =>handledelete(order._id)}><CancelIcon sx={{fontSize:'30px'}} /></p></TableCell>
+                                <TableCell >
+                                <Link to="/dashboard/addreviews"><RateReviewIcon sx={{fontSize:'30px'}} /></Link></TableCell>
                                 <TableCell >
                                 <StripeCheckout
                                         name="eNursery.com"
-                                        
               billingAddress
               shippingAddress
-              description={`Your total is ${order.order.price * order.quantity}`}
+              description={`Your total is ${order.order.price * order.quantity+50}`}
               token={makePayment}
               stripeKey={KEY}
-            />
+            /><br/>
+          
+            
                                 </TableCell>   
-                                
+                                <TableCell>  
+                                  <form   onSubmit={handleSubmit(onSubmit)}>
+                                  <select style={{ height: '35px',marginTop:'7px'}}
+                              onClick={() => handleOrderId(order._id)}
+                              {...register("status")}
+                              >
+                                      <option value={order.status}>{order.status}</option>
+                                  <option value="done">Done</option>
+                                  </select>
+                                  <Button type="submit" variant="contained" style={{backgroundColor:'salmon'}}>Cash</Button>
+                              </form> 
+                                </TableCell>   
+
+
+
+                                {/* //order */}
                                 <TableCell >
                                 <form   onSubmit={handleSubmit(onSubmit)}>
-                                    <select style={{ height: '30px'}}
+                                    <select style={{ height: '35px',marginTop:'7px'}}
                                 onClick={() => handleOrderId(order._id)}
-                                {...register("status")}
+                                {...register("return")}
                                 >
-                                        <option value={order.status}>{order.status}</option>
-                                    <option value="done">Done</option>
+                                        <option value={order.return} style={{marginRight:'20px'}}>{order.return}</option>
+                                    <option value="yes">yes</option>
                                     </select>
-                                    <Button type="submit" variant="contained" style={{backgroundColor:'salmon'}}>COD</Button>
+                                    <Button type="submit" variant="contained" style={{backgroundColor:'salmon'}}>Done</Button>
                                 </form>
                                 </TableCell >
                                     

@@ -72,10 +72,12 @@ const AllOrder = () => {
                             {/* <TableCell style={{color:"blue"}}>Seller-City</TableCell> */}
                             <TableCell style={{color:"blue"}}>Per-Price</TableCell>
                             <TableCell style={{ color: "blue" }}>Quantity</TableCell>
+                            <TableCell style={{ color: "blue" }}>Shipping</TableCell>
                             <TableCell style={{color:"blue"}}>Total-Price</TableCell>
                             
                             <TableCell style={{color:"blue"}} align="right">Status</TableCell>
-                            <TableCell style={{color:"blue"}} align="right">Action</TableCell>
+                            <TableCell style={{color:"blue"}}>Return</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -95,14 +97,15 @@ const AllOrder = () => {
                                 {/* <TableCell >{order.order.city}</TableCell> */}
                                 <TableCell >{order.order.price}</TableCell>
                                 <TableCell >{order.quantity}</TableCell>
-                                <TableCell >{order.order.price * order.quantity}</TableCell>
+                                <TableCell >{50}</TableCell>
+                                <TableCell >{order.order.price * order.quantity+50}</TableCell>
                                 <TableCell >{order.status}</TableCell>
+                                <TableCell >{order.return}</TableCell>
 
                                 <TableCell >
                                 <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
                                 
-                                <TableCell >
-                                <Button variant="contained" style={{ backgroundColor: '#41469c' }} >Update</Button></TableCell>
+                               
 
                               
                                         

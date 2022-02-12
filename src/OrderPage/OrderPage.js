@@ -31,6 +31,7 @@ const OrderPage = () => {
       const order = { _id,productName,sellerName,price,city ,}
       data.order = order;
       data.status = "pending";
+      data.return = "no";
       handleUpdateStock(data.quantity,product.productName,product.stock);
   fetch('https://cryptic-fortress-77677.herokuapp.com/orders', {
       method: 'POST',

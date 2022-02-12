@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { Link } from 'react-router-dom';
 
 const AddReviews = () => {
     const { user } = useAuth();
@@ -92,7 +93,13 @@ const AddReviews = () => {
                 <Button variant="contained" type="submit">
                     Add Review
                             </Button>
+                           <Link to="/home" style={{textDecoration:'none'}}>
+                           <Button variant="contained" style={{ backgroundColor:'#9907ed', marginLeft:"10px"}} type="submit">
+                    Skip
+                            </Button>
+                           </Link> 
             </form>
+             
             {success && <p style={{ color: 'green' }}>{success}</p>}
 
                 </Grid>

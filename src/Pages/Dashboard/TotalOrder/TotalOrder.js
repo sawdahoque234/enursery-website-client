@@ -1,6 +1,7 @@
 import useAuth from "../../../hooks/useAuth";
 import { Container, Button, TableCell, TableContainer, Table, TableHead, TableRow, TableBody, Paper } from '@mui/material';
 import React,{useEffect,useState} from 'react';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useForm } from "react-hook-form";
 
 const TotalOrder = () => {
@@ -70,7 +71,11 @@ const TotalOrder = () => {
                             <TableCell style={{color:"blue"}}>Product-Name</TableCell>
                             <TableCell style={{color:"blue"}}>Per-Price</TableCell>
                             <TableCell style={{ color: "blue" }}>Quantity</TableCell>
+                            <TableCell style={{ color: "blue" }}>Shipping</TableCell>
                             <TableCell style={{color:"blue"}}>Total-Price</TableCell>
+                            <TableCell style={{color:"blue"}}>Return</TableCell>
+                            <TableCell style={{color:"blue"}}>Status</TableCell>
+                            <TableCell style={{color:"blue"}}>Cancel</TableCell>
                             
 
                         </TableRow>
@@ -90,7 +95,9 @@ const TotalOrder = () => {
                                 </TableCell>
                                 <TableCell >{order.order.price}</TableCell>
                                 <TableCell >{order.quantity}</TableCell>
-                                <TableCell >{order.order.price * order.quantity}</TableCell>
+                                <TableCell >{50}</TableCell>
+                                <TableCell >{order.order.price * order.quantity+50}</TableCell>
+                                <TableCell >{order.return}</TableCell>
                                 <TableCell >
 
 <form   onSubmit={handleSubmit(onSubmit)}>
@@ -108,7 +115,7 @@ onClick={() => handleOrderId(order._id)}
 </TableCell >
                                 <TableCell >
                                
-                                <Button variant="contained" style={{ backgroundColor: '#e64088' }} onClick={() =>handledelete(order._id)}>Cancel</Button></TableCell>
+                                <p variant="contained"  onClick={() =>handledelete(order._id)}><CancelIcon sx={{fontSize:'30px'}} /></p></TableCell>
                                 
                                
                                         

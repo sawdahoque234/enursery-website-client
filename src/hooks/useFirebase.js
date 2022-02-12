@@ -92,7 +92,7 @@ const useFirebase = () => {
     }, [auth])
 //role
 // useEffect(() => {
-// fetch(`http://localhost:5000/checkrole/${order?.productName}`)
+// fetch(`https://cryptic-fortress-77677.herokuapp.com/checkrole/${order?.productName}`)
 // .then((res)=>res.json())
 // .then((result)=>{
 //     console.log(result)

@@ -17,7 +17,7 @@ const Offer = () => {
                        <span style={{marginLeft:'15px',fontWeight:'800'}} > Free shipping
                     </span>
                     </Typography>
-                    <Typography sx={{ marginTop:'-40px'}}> All order over 1000.0Tk</Typography>
+                    <Typography sx={{ marginTop:'-40px'}}> All order over 10000.0Tk<br/>& Every order 50.0Tk</Typography>
           </Grid>
                 <Grid item xs={3} sm={4} md={4}>
                 <Typography variant="h5" sx={{display:'flex',alignItems:'items-center'}}>

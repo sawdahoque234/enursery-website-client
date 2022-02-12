@@ -9,7 +9,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
-
+import { Link } from 'react-router-dom';
+import FacebookIcon from '@mui/icons-material/Facebook';
 const Team = () => {
     return (
        
@@ -35,12 +36,14 @@ image={img1}
 <CardContent>
 <Typography gutterBottom component="div">
                 
-<span><InstagramIcon sx={{color:'#b56328',marginRight:'8px',fontSize:'30px'}}/></span>
-<span><TwitterIcon sx={{color:'#4082ed',marginRight:'8px',fontSize:'30px'}}/></span>
-<span><LinkedInIcon sx={{color:'#4082ed',fontSize:'30px'}}/></span>
+<span> <a href='https://www.facebook.com/'><FacebookIcon sx={{color:'#4082ed',fontSize:'30px'}}/></a></span>
+<span> <a href='https://www.instagram.com/'><InstagramIcon sx={{color:'#b56328',marginRight:'8px',fontSize:'30px'}}/></a></span>
+<span> <a href='https://twitter.com/?lang=en'><TwitterIcon sx={{color:'#4082ed',marginRight:'8px',fontSize:'30px'}}/></a></span>
+<span> <a href='https://www.linkedin.com/in/sawdahoque/'><LinkedInIcon sx={{color:'#4082ed',fontSize:'30px'}}/></a></span>
+
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'700',fontSize:'25px'}} component="div">
-Mr Jerry
+Mrs Jasmine
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'400'}} component="div">
 Garden Designer
@@ -61,6 +64,7 @@ image={img2}
 />
 <CardContent>
 <Typography gutterBottom component="div">
+<span> <a href='https://www.facebook.com/'><FacebookIcon sx={{color:'#4082ed',fontSize:'30px'}}/></a></span>
                 
 <span><InstagramIcon sx={{color:'#b56328',marginRight:'8px',fontSize:'30px'}}/></span>
 <span><TwitterIcon sx={{color:'#4082ed',marginRight:'8px',fontSize:'30px'}}/></span>
@@ -88,13 +92,14 @@ image={img3}
 />
 <CardContent>
 <Typography gutterBottom component="div">
+<span> <a href='https://www.facebook.com/'><FacebookIcon sx={{color:'#4082ed',fontSize:'30px'}}/></a></span>
                 
 <span><InstagramIcon sx={{color:'#b56328',marginRight:'8px',fontSize:'30px'}}/></span>
 <span><TwitterIcon sx={{color:'#4082ed',marginRight:'8px',fontSize:'30px'}}/></span>
 <span><LinkedInIcon sx={{color:'#4082ed',fontSize:'30px'}}/></span>
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'700',fontSize:'25px'}} component="div">
-Mr Wilson Roy
+Mrs Jerry
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'400'}} component="div">
 Plants Specialist
@@ -115,13 +120,15 @@ image={img4}
 />
 <CardContent>
 <Typography gutterBottom component="div">
+<span> <a href='https://www.facebook.com/'><FacebookIcon sx={{color:'#4082ed',fontSize:'30px'}}/></a></span>
                 
 <span><InstagramIcon sx={{color:'#b56328',marginRight:'8px',fontSize:'30px'}}/></span>
 <span><TwitterIcon sx={{color:'#4082ed',marginRight:'8px',fontSize:'30px'}}/></span>
 <span><LinkedInIcon sx={{color:'#4082ed',fontSize:'30px'}}/></span>
+
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'700',fontSize:'25px'}} component="div">
-Mrs Jerry 
+Mr Wilson Roy
 </Typography>
 <Typography gutterBottom  sx={{fontWeight:'400'}} component="div">
 Garden Designer

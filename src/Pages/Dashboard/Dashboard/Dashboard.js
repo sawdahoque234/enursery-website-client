@@ -23,6 +23,7 @@ import MyOrders from '../MyOrders/MyOrders';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AllOrder from '../AllOrder/AllOrder';
 import AddProduct from '../AddProduct/AddProduct';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import AddReviews from '../AddReviews/AddReviews';
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
@@ -62,7 +63,7 @@ function Dashboard(props) {
       }, [user?.email]);
       //seller
     React.useEffect(() => {
-        fetch(`http://localhost:5000/seller/${user?.email}`)
+        fetch(`https://cryptic-fortress-77677.herokuapp.com/seller/${user?.email}`)
           .then((res) => res.json())
           .then((data) => {
             if (data[0]?.role === "seller") {
@@ -81,13 +82,15 @@ function Dashboard(props) {
             {
                 user &&
                 <Box>
-                    <Link to="/products" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
+                    <Link to="/home" style={{ marginRight:'20px',textDecoration: 'none', textAlign: 'initial', fontSize: '20px' }}> <HomeIcon sx={{mx:2}}/>Home</Link><br /><br/>
            
+           <Link to='/products' style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
+           ><Inventory2OutlinedIcon  sx={{mx:2}}/>Products</Link><br /><br/>
            <Link to={`${url}/myorders`}style={{marginLeft:'8px',textDecoration:'none',fontSize:'20px'}}
            ><AddShoppingCartIcon sx={{mx:2}}/>My order</Link><br /><br/>
            
-           <Link to={`${url}/addreviews`}style={{marginRight:'20px',textDecoration:'none',fontSize:'18px'}}
-           ><BorderColorIcon sx={{ mx:2}}/>Review</Link><br /><br/>
+           {/* <Link to={`${url}/addreviews`}style={{marginRight:'20px',textDecoration:'none',fontSize:'18px'}}
+           ><BorderColorIcon sx={{ mx:2}}/>Review</Link><br /><br/> */}
 
                 </Box>
             }
